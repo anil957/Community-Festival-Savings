@@ -3,212 +3,351 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Festival Velam Fund Manager - Dashboard</title>
+    <title>Festival Velam Fund Manager</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <h2 class="navbar-title">Festival Velam Fund Manager</h2>
-            <div class="navbar-right">
-                <span class="username-display">Welcome, <strong id="displayUsername">Admin</strong></span>
-                <button id="logoutBtn" class="logout-btn">Logout</button>
+    <!-- Navigation Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <h1>🎪 Festival Velam Fund Manager</h1>
+                <p class="subtitle">Community Fund & Loan Management System</p>
+            </div>
+            <div class="user-section">
+                <span id="userDisplay">Welcome, <strong>User</strong> | <em id="roleDisplay">Admin</em></span>
+                <button id="logoutBtn" class="btn btn-logout">Logout</button>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- Main Dashboard -->
-    <div class="dashboard-container">
-        <!-- Summary Cards -->
-        <section class="summary-section">
-            <h2>Fund Summary</h2>
-            <div class="cards-grid">
-                <div class="card total-fund">
-                    <h3>Total Fund Collected</h3>
-                    <p class="card-value" id="totalFund">₹0</p>
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Summary -->
+        <section class="dashboard-summary">
+            <h2>📊 Financial Dashboard</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <h3>Total Contributions</h3>
+                    <p class="metric-value" id="totalContributions">₹0</p>
                 </div>
-                <div class="card total-interest">
+                <div class="metric-card">
                     <h3>Total Interest Earned</h3>
-                    <p class="card-value" id="totalInterest">₹0</p>
+                    <p class="metric-value" id="totalInterest">₹0</p>
                 </div>
-                <div class="card total-sheep">
-                    <h3>Total Sheep Expense</h3>
-                    <p class="card-value" id="totalSheep">₹0</p>
+                <div class="metric-card">
+                    <h3>Total Loans Given</h3>
+                    <p class="metric-value" id="totalLoansGiven">₹0</p>
                 </div>
-                <div class="card top-borrower">
-                    <h3>Top Borrower</h3>
-                    <p class="card-value" id="topBorrower">-</p>
+                <div class="metric-card">
+                    <h3>Total Loans Returned</h3>
+                    <p class="metric-value" id="totalLoansReturned">₹0</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Total Expenses</h3>
+                    <p class="metric-value" id="totalExpenses">₹0</p>
+                </div>
+                <div class="metric-card highlight">
+                    <h3>Available Balance</h3>
+                    <p class="metric-value" id="availableBalance">₹0</p>
                 </div>
             </div>
         </section>
 
-        <!-- Input Forms Section -->
-        <section class="input-section">
-            <div class="form-container">
-                <!-- Monthly Contribution Form -->
-                <div class="form-block">
-                    <h3>Add Monthly Contribution</h3>
-                    <form id="contributionForm" class="input-form">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="monthName">Month Name</label>
-                                <input type="text" id="monthName" placeholder="e.g., January" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="collectedAmount">Amount Collected (₹)</label>
-                                <input type="number" id="collectedAmount" placeholder="e.g., 5500" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="interestEarned">Interest Earned (₹)</label>
-                                <input type="number" id="interestEarned" placeholder="e.g., 500" required>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Add Contribution</button>
-                    </form>
-                </div>
+        <!-- Tab Navigation -->
+        <nav class="tab-navigation">
+            <button class="tab-btn active" data-tab="contributions">💰 Contributions</button>
+            <button class="tab-btn" data-tab="loans">🏦 Loans (Velam)</button>
+            <button class="tab-btn" data-tab="expenses">🐑 Expenses</button>
+            <button class="tab-btn" data-tab="reports">📈 Reports</button>
+        </nav>
 
-                <!-- Sheep Expense Form -->
-                <div class="form-block">
-                    <h3>Add Sheep Festival Expense</h3>
-                    <form id="sheepExpenseForm" class="input-form">
-                        <div class="form-row">
+        <!-- CONTRIBUTIONS TAB -->
+        <section id="contributions-tab" class="tab-content active">
+            <div class="section-wrapper">
+                <!-- Add Contribution Form -->
+                <div class="form-section" id="addContributionSection">
+                    <h3>➕ Add Monthly Contribution</h3>
+                    <form id="contributionForm" class="form">
+                        <div class="form-grid">
                             <div class="form-group">
-                                <label for="festivalName">Festival/Event Name</label>
-                                <input type="text" id="festivalName" placeholder="e.g., Diwali Festival" required>
+                                <label for="contDate">Date</label>
+                                <input type="date" id="contDate" required>
                             </div>
-                            <div class="form-group">
-                                <label for="sheepExpenseAmount">Amount Spent (₹)</label>
-                                <input type="number" id="sheepExpenseAmount" placeholder="e.g., 2000" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="sheepCount">Number of Sheep</label>
-                                <input type="number" id="sheepCount" placeholder="e.g., 3" required>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Add Expense</button>
-                    </form>
-                </div>
-
-                <!-- Money Taken Form -->
-                <div class="form-block">
-                    <h3>Record Money Taken</h3>
-                    <form id="moneyTakenForm" class="input-form">
-                        <div class="form-row">
                             <div class="form-group">
                                 <label for="personName">Person Name</label>
-                                <input type="text" id="personName" placeholder="e.g., Raj Kumar" required>
+                                <input type="text" id="personName" placeholder="Enter person name" required>
                             </div>
                             <div class="form-group">
-                                <label for="amountTaken">Amount Taken (₹)</label>
-                                <input type="number" id="amountTaken" placeholder="e.g., 5000" required>
+                                <label for="contributionAmount">Amount (₹)</label>
+                                <input type="number" id="contributionAmount" placeholder="₹500" min="0" required>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Record Transaction</button>
+                        <button type="submit" class="btn btn-primary" id="submitContribution">Add Contribution</button>
                     </form>
+                </div>
+
+                <!-- Contributions List -->
+                <div class="list-section">
+                    <h3>📋 Monthly Contributions Log</h3>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Person Name</th>
+                                    <th>Amount (₹)</th>
+                                    <th>Month</th>
+                                    <th class="admin-col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contributionsList">
+                                <tr class="empty-row"><td colspan="5">No contributions yet</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Chart Section -->
-        <section class="chart-section">
-            <h2>Monthly Contributions Visualization</h2>
-            <div class="chart-container">
-                <canvas id="contributionChart"></canvas>
-                <button id="toggleTableBtn" class="btn btn-secondary">View as Table</button>
+        <!-- LOANS TAB -->
+        <section id="loans-tab" class="tab-content">
+            <div class="section-wrapper">
+                <!-- Add Loan Form -->
+                <div class="form-section" id="addLoanSection">
+                    <h3>➕ Add Loan (Velam)</h3>
+                    <form id="loanForm" class="form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="loanDate">Date</label>
+                                <input type="date" id="loanDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="loanPersonName">Person Name</label>
+                                <input type="text" id="loanPersonName" placeholder="Enter person name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="principalAmount">Principal Amount (₹)</label>
+                                <input type="number" id="principalAmount" placeholder="Loan amount" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="interestAmount">Interest Amount (₹)</label>
+                                <input type="number" id="interestAmount" placeholder="Interest" min="0" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="submitLoan">Add Loan</button>
+                    </form>
+                </div>
+
+                <!-- Loans List -->
+                <div class="list-section">
+                    <h3>🏦 Active & Returned Loans</h3>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Person Name</th>
+                                    <th>Principal (₹)</th>
+                                    <th>Interest (₹)</th>
+                                    <th>Status</th>
+                                    <th class="admin-col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="loansList">
+                                <tr class="empty-row"><td colspan="6">No loans yet</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Top Borrowers Stats -->
+                    <div class="stats-box">
+                        <h4>Top Borrowers (by frequency)</h4>
+                        <ul id="topBorrowersList">
+                            <li>No borrowers yet</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Table Section (Hidden by default) -->
-        <section id="tableSection" class="table-section" style="display: none;">
-            <h2>Monthly Contributions Data</h2>
-            <div class="table-wrapper">
-                <table id="contributionTable" class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Month</th>
-                            <th>Amount Collected (₹)</th>
-                            <th>Interest Earned (₹)</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <tr>
-                            <td colspan="4" class="empty-message">No data available</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <!-- EXPENSES TAB -->
+        <section id="expenses-tab" class="tab-content">
+            <div class="section-wrapper">
+                <!-- Add Expense Form -->
+                <div class="form-section" id="addExpenseSection">
+                    <h3>➕ Add Expense</h3>
+                    <form id="expenseForm" class="form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="expenseDate">Date</label>
+                                <input type="date" id="expenseDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="expenseType">Expense Type</label>
+                                <select id="expenseType" required>
+                                    <option value="">Select type</option>
+                                    <option value="Sheep Purchase">🐑 Sheep Purchase</option>
+                                    <option value="Miscellaneous">📦 Miscellaneous</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="expenseDescription">Description</label>
+                                <input type="text" id="expenseDescription" placeholder="e.g., Festival Diwali" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="expenseAmount">Amount (₹)</label>
+                                <input type="number" id="expenseAmount" placeholder="Amount" min="0" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="submitExpense">Add Expense</button>
+                    </form>
+                </div>
+
+                <!-- Expenses List -->
+                <div class="list-section">
+                    <h3>📝 All Expenses</h3>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                    <th>Amount (₹)</th>
+                                    <th class="admin-col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="expensesList">
+                                <tr class="empty-row"><td colspan="5">No expenses yet</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Money Taken Records Section -->
-        <section class="records-section">
-            <h2>Money Taken Records</h2>
-            <div class="table-wrapper">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Person Name</th>
-                            <th>Times Taken Money</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="moneyTakenTableBody">
-                        <tr>
-                            <td colspan="3" class="empty-message">No records available</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+        <!-- REPORTS TAB -->
+        <section id="reports-tab" class="tab-content">
+            <div class="section-wrapper">
+                <h3>📊 Monthly Summary Report</h3>
+                
+                <!-- Chart Container -->
+                <div class="chart-container">
+                    <canvas id="monthlyChart" width="400" height="200"></canvas>
+                </div>
 
-        <!-- Sheep Expenses Section -->
-        <section class="expenses-section">
-            <h2>Festival Sheep Expenses</h2>
-            <div class="table-wrapper">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Festival/Event</th>
-                            <th>Amount (₹)</th>
-                            <th>Sheep Count</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="sheepExpenseTableBody">
-                        <tr>
-                            <td colspan="4" class="empty-message">No expenses recorded</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <!-- Monthly Details -->
+                <div class="list-section">
+                    <h3>Monthly Breakdown</h3>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Contributions (₹)</th>
+                                    <th>Loans Given (₹)</th>
+                                    <th>Loans Returned (₹)</th>
+                                    <th>Interest (₹)</th>
+                                    <th>Expenses (₹)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="monthlyReportList">
+                                <tr class="empty-row"><td colspan="6">No data available</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Festival Velam Fund Manager © 2024 | All data stored locally in browser</p>
+    </footer>
+
+    <!-- Modal for Editing/Viewing -->
+    <div id="editModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3 id="modalTitle">Edit Entry</h3>
+            <form id="editForm" class="form">
+                <div id="editFormFields"></div>
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" id="modalCancelBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <!-- Simple Canvas for Chart -->
     <script src="app.js"></script>
     <script>
-        // Check if user is logged in
-        if (!sessionStorage.getItem('loggedIn')) {
-            window.location.href = 'index.html';
-        }
+        // Initialize app on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('Dashboard loaded');
+            
+            // Check authentication
+            const userRole = localStorage.getItem('userRole');
+            const currentUser = localStorage.getItem('currentUser');
 
-        // Display username
-        const username = sessionStorage.getItem('username');
-        document.getElementById('displayUsername').textContent = username;
+            console.log('User role:', userRole, 'Current user:', currentUser);
 
-        // Logout functionality
-        document.getElementById('logoutBtn').addEventListener('click', function() {
-            sessionStorage.removeItem('loggedIn');
-            sessionStorage.removeItem('username');
-            window.location.href = 'index.html';
-        });
+            if (!userRole || !currentUser) {
+                console.log('No user found, redirecting to login');
+                window.location.href = 'index.html';
+                return;
+            }
 
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', function() {
-            window.fundManager = new FundManager();
-            window.fundManager.initializeApp();
-        });
+            // Display user info
+            const userDisplay = document.getElementById('userDisplay');
+            const roleDisplay = document.getElementById('roleDisplay');
+            
+            if (userDisplay) {
+                userDisplay.textContent = `Welcome, ${currentUser} | ${userRole === 'ROLE_ADMIN' ? 'Admin' : 'Viewer'}`;
+            }
+            if (roleDisplay) {
+                roleDisplay.textContent = userRole === 'ROLE_ADMIN' ? 'Admin' : 'Viewer';
+            }
+
+            // Hide form sections for readonly users
+            if (userRole === 'ROLE_READONLY') {
+                const addContrib = document.getElementById('addContributionSection');
+                const addLoan = document.getElementById('addLoanSection');
+                const addExpense = document.getElementById('addExpenseSection');
+                
+                if (addContrib) addContrib.style.display = 'none';
+                if (addLoan) addLoan.style.display = 'none';
+                if (addExpense) addExpense.style.display = 'none';
+                
+                document.querySelectorAll('.admin-col').forEach(el => el.style.display = 'none');
+            }
+
+            // Logout handler
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Logout clicked');
+                    localStorage.removeItem('userRole');
+                    localStorage.removeItem('currentUser');
+                    window.location.href = 'index.html';
+                });
+            }
+
+            // Initialize FundManager
+            console.log('Initializing FundManager');
+            setTimeout(() => {
+                if (typeof FundManager !== 'undefined') {
+                    window.fundManager = new FundManager();
+                    window.fundManager.init();
+                    console.log('FundManager initialized');
+                } else {
+                    console.error('FundManager class not found');
+                }
+            }, 100);
+        }, false);
     </script>
 </body>
 </html>
